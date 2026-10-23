@@ -15,11 +15,15 @@ node_modules/
 
 # ---- 运行时数据 / 日志 ----
 logs/
-data/
+/data/
+/backend/data/*
 *.db
 *.db-wal
 *.db-shm
 *.log
+
+# 演示数据库随仓库分发，保证队友拿到同一份数据
+!/backend/data/scenicflow.db
 
 # ---- 后端上传临时文件 ----
 backend/public/uploads/
