@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScenicFlow 景区实时导览</title>
+    <!-- 高德地图 JS API 2.0（用户端底图 / 路线页共用） -->
+    <script>
+      window._AMapSecurityConfig = {
+        securityJsCode: '55fedb12f54b174878eddfcdfd1ae659d',
+      }
+    </script>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=f1a2aae1ca303d91b98e157741976156&plugin=AMap.Scale,AMap.ToolBar"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+    "dbPath": "data/scenicflow.db",
+    "logDir": "logs",
+    "logLevel": "INFO",
+    "totalCapacity": 20000,
+    "debounceSeconds": 30,
+    "taskQueueMaxSize": 1000,
+    "flowRecordRetentionDays": 7,
+    "schedulingRecordRetentionDays": 30,
+    "threadPoolSize": 4,
+    "processWindowMs": 1000,
+    "storageBatchSize": 100,
+    "storageBatchIntervalMs": 1000
+}

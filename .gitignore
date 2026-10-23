@@ -1,0 +1,40 @@
+# ---- 构建产物 ----
+build/
+dist/
+out/
+cmake-build-*/
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.lib
+*.exp
+
+# ---- 依赖 ----
+node_modules/
+
+# ---- 运行时数据 / 日志 ----
+logs/
+data/
+*.db
+*.db-wal
+*.db-shm
+*.log
+
+# ---- 后端上传临时文件 ----
+backend/public/uploads/
+
+# ---- 编辑器 ----
+.vscode/
+.idea/
+*.user
+*.suo
+
+# ---- 设计文档（按需保留在本地，不入库）----
+前端设计方案.md
+后端设计方案.md
+数据库表结构清单.md
+旅游景区需求说明书.md
+
+# ---- 本地参考素材（未被代码引用）----
+1769502833135369.jpg
