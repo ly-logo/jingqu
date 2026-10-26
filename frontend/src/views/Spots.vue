@@ -18,9 +18,10 @@
 
     <div class="spot-grid">
       <el-card
-        v-for="spot in filteredSpots"
+        v-for="(spot, i) in filteredSpots"
         :key="spot.spotId"
-        class="spot-card"
+        class="spot-card sf-fade-up"
+        :style="{ animationDelay: `${Math.min(i * 0.04, 0.4)}s` }"
         shadow="hover"
         @click="openDetail(spot)"
       >
@@ -155,11 +156,11 @@ async function updateBigChart() {
         smooth: true,
         areaStyle: {
           color: new (echarts as any).graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: 'rgba(64,158,255,0.3)' },
-            { offset: 1, color: 'rgba(64,158,255,0.05)' },
+            { offset: 0, color: 'rgba(20,184,166,0.3)' },
+            { offset: 1, color: 'rgba(20,184,166,0.04)' },
           ]),
         },
-        lineStyle: { color: '#409eff', width: 2 },
+        lineStyle: { color: '#0d9488', width: 2 },
       },
     ],
   })
@@ -219,13 +220,12 @@ onUnmounted(() => {
 }
 
 .spot-card {
-  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
 }
 
 .spot-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .spot-header {
@@ -233,11 +233,13 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #e6f0ee;
 }
 
 .spot-name {
   font-weight: 600;
-  color: #303133;
+  color: var(--sf-ink-soft);
   font-size: 15px;
 }
 

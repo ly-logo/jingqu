@@ -23,12 +23,12 @@
       :type="data.peakAdvice.isPeak ? 'warning' : 'success'"
       :closable="false"
       show-icon
-      class="alert"
+      class="alert sf-fade-up"
     />
 
     <!-- 当日客流时段预测 -->
     <el-card shadow="never" class="card">
-      <div class="card-title">今日客流时段预测</div>
+      <div class="card-title sf-section-title">今日客流时段预测</div>
       <ForecastBar
         v-if="forecast"
         :points="forecast.points"
@@ -39,7 +39,7 @@
 
     <!-- 避峰榜单 -->
     <el-card shadow="never" class="card">
-      <div class="card-title">避峰榜单 · 人少舒适</div>
+      <div class="card-title sf-section-title">避峰榜单 · 人少舒适</div>
       <div
         v-for="(s, i) in avoidList"
         :key="s.spotId"
@@ -56,7 +56,7 @@
 
     <!-- 拥堵预警榜单 -->
     <el-card shadow="never" class="card">
-      <div class="card-title">拥堵预警榜单</div>
+      <div class="card-title sf-section-title">拥堵预警榜单</div>
       <div
         v-for="(s, i) in crowdedList"
         :key="s.spotId"
@@ -136,64 +136,83 @@ usePolling(fetchData, 30000)
   gap: 12px;
 }
 
-.card {
-  border-radius: 6px;
-}
-
 .card-title {
   font-size: 14px;
-  font-weight: 600;
-  color: #303133;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
+/* ---------- 实时结论卡：青碧瓷感 hero ---------- */
 .conclusion-card {
   text-align: center;
+  border: none;
+  background:
+    radial-gradient(280px 140px at 88% -20%, rgba(232, 178, 90, 0.16) 0%, transparent 65%),
+    radial-gradient(320px 180px at 6% 118%, rgba(45, 212, 191, 0.2) 0%, transparent 60%),
+    linear-gradient(150deg, #0f5f59 0%, #0a4a45 55%, #072e2b 100%);
+  box-shadow: 0 12px 30px rgba(8, 56, 52, 0.28);
+}
+
+.conclusion-card :deep(.el-card__body) {
+  padding: 22px 18px 18px;
 }
 
 .conclusion-title {
-  font-size: 13px;
-  color: #909399;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.62);
+  letter-spacing: 4px;
 }
 
 .conclusion-main {
   font-size: 40px;
   font-weight: 700;
   letter-spacing: 8px;
-  margin: 6px 0;
+  margin: 8px 0 6px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
 }
 
 .conclusion-sub {
   font-size: 12px;
-  color: #909399;
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
 }
 
 .toggle {
   margin-left: 6px;
-  color: #409eff;
+  color: #7be3d7;
 }
 
 .conclusion-detail {
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 12px;
-  color: #606266;
-  background: #f5f7fa;
-  border-radius: 4px;
-  padding: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 8px 10px;
+  backdrop-filter: blur(4px);
 }
 
 .alert {
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
+/* ---------- 榜单行 ---------- */
 .rank-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid #f5f7fa;
+  padding: 9px 8px;
+  border-bottom: 1px solid #eef4f3;
+  border-radius: 8px;
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.rank-row:hover {
+  background: #f2faf9;
+  transform: translateX(3px);
 }
 
 .rank-row:last-of-type {
@@ -201,11 +220,12 @@ usePolling(fetchData, 30000)
 }
 
 .rank-no {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  width: 21px;
+  height: 21px;
+  border-radius: 7px;
   color: #fff;
   font-size: 12px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,19 +233,22 @@ usePolling(fetchData, 30000)
 }
 
 .rank-no.avoid {
-  background: #67c23a;
+  background: linear-gradient(135deg, #34d399, #10a06e);
+  box-shadow: 0 3px 8px rgba(16, 160, 110, 0.32);
 }
 
 .rank-no.crowded {
-  background: #f56c6c;
+  background: linear-gradient(135deg, #fb7a6b, #f04a3a);
+  box-shadow: 0 3px 8px rgba(240, 74, 58, 0.3);
 }
 
 .rank-name {
   flex: 1;
   font-size: 14px;
-  color: #303133;
+  color: var(--sf-text);
 }
 
+/* ---------- 底图入口 ---------- */
 .map-entry {
   cursor: pointer;
 }
@@ -241,7 +264,16 @@ usePolling(fetchData, 30000)
 }
 
 .map-icon {
-  font-size: 26px;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f766e;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #e9f7f5, #d3efeb);
+  border: 1px solid #cbe8e4;
 }
 
 .map-text {
@@ -251,17 +283,23 @@ usePolling(fetchData, 30000)
 .map-title {
   font-size: 14px;
   font-weight: 600;
-  color: #303133;
+  color: var(--sf-ink-soft);
 }
 
 .map-sub {
   font-size: 12px;
-  color: #909399;
+  color: var(--sf-text-secondary);
   margin-top: 2px;
 }
 
 .map-arrow {
   font-size: 20px;
-  color: #c0c4cc;
+  color: #b6ccc8;
+  transition: transform 0.22s ease, color 0.22s ease;
+}
+
+.map-entry:hover .map-arrow {
+  transform: translateX(3px);
+  color: var(--sf-primary);
 }
 </style>

@@ -13,6 +13,10 @@ cmake-build-*/
 # ---- 依赖 ----
 node_modules/
 
+# ---- 本地工具链 / 包缓存（启动脚本自动下载，勿入库）----
+.toolchain/
+.npm-cache/
+
 # ---- 运行时数据 / 日志 ----
 logs/
 /data/

@@ -1,0 +1,298 @@
+/* ============================================================
+ * ScenicFlow 全局设计主题 —— 「山黛青碧」
+ * 纯表现层：设计令牌 + Element Plus 主题变量覆盖 + 全局质感
+ * ============================================================ */
+
+:root {
+  /* ---- 品牌令牌 ---- */
+  --sf-primary: #0d9488;
+  --sf-primary-strong: #0a756c;
+  --sf-primary-soft: #14b8a6;
+  --sf-primary-pale: #e9f7f5;
+  --sf-accent: #e8b25a; /* 山霞金，少量点缀 */
+  --sf-ink: #0b2b29; /* 山黛深青 */
+  --sf-ink-soft: #123f3c;
+  --sf-bg: #f1f6f5;
+  --sf-text: #1f2d2c;
+  --sf-text-secondary: #5f746f;
+
+  /* ---- 圆角 / 阴影 / 间距 ---- */
+  --sf-radius-sm: 8px;
+  --sf-radius: 14px;
+  --sf-radius-lg: 20px;
+  --sf-shadow-xs: 0 1px 2px rgba(11, 43, 41, 0.05);
+  --sf-shadow-sm: 0 4px 14px rgba(11, 60, 56, 0.07);
+  --sf-shadow: 0 10px 28px rgba(11, 60, 56, 0.1);
+  --sf-shadow-lg: 0 20px 48px rgba(7, 40, 38, 0.16);
+
+  /* ---- Element Plus 主题变量覆盖（青碧色系） ---- */
+  --el-color-primary: var(--sf-primary);
+  --el-color-primary-light-3: #4db6ac;
+  --el-color-primary-light-5: #86cdc7;
+  --el-color-primary-light-7: #b9e1dd;
+  --el-color-primary-light-8: #d2edea;
+  --el-color-primary-light-9: var(--sf-primary-pale);
+  --el-color-primary-dark-2: var(--sf-primary-strong);
+
+  --el-border-radius-base: var(--sf-radius-sm);
+  --el-border-radius-small: 6px;
+
+  --el-box-shadow: var(--sf-shadow);
+  --el-box-shadow-light: var(--sf-shadow-sm);
+
+  --el-table-header-bg-color: #eef6f5;
+  --el-table-header-text-color: #33504d;
+  --el-table-border-color: #e8f0ee;
+}
+
+/* ---------- 基础 ---------- */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--sf-text);
+  font-family:
+    'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, -apple-system,
+    'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* 山岚底色：极淡的青碧光晕铺在背景上 */
+  background:
+    radial-gradient(900px 480px at 12% -8%, rgba(20, 184, 166, 0.08) 0%, transparent 60%),
+    radial-gradient(760px 420px at 96% 4%, rgba(232, 178, 90, 0.06) 0%, transparent 55%),
+    radial-gradient(680px 520px at 50% 108%, rgba(13, 148, 136, 0.07) 0%, transparent 60%),
+    var(--sf-bg);
+  background-attachment: fixed;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* 数字使用等宽数字，看板读数不跳动 */
+.el-statistic__number,
+.sf-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 卡片：统一圆角、描边、柔和阴影与悬浮 ---------- */
+.el-card {
+  border: 1px solid #e4eeec;
+  border-radius: var(--sf-radius) !important;
+  box-shadow: var(--sf-shadow-xs);
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+}
+
+.el-card.is-hover-shadow:hover,
+.el-card[shadow='hover']:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sf-shadow);
+  border-color: #cfe3e0;
+}
+
+.el-card__header {
+  padding: 14px 18px;
+  font-weight: 600;
+  border-bottom: 1px solid #edf3f2;
+}
+
+/* ---------- 按钮：主按钮青碧渐变 + 轻投影 ---------- */
+.el-button--primary {
+  background: linear-gradient(135deg, var(--sf-primary-soft) 0%, var(--sf-primary) 60%, var(--sf-primary-strong) 100%);
+  border: none;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.28);
+  letter-spacing: 1px;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background: linear-gradient(135deg, #23c4b3 0%, #0f9e92 60%, #0b8177 100%);
+  filter: brightness(1.03);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.38);
+  transform: translateY(-1px);
+}
+
+.el-button--primary:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(13, 148, 136, 0.3);
+}
+
+.el-button {
+  border-radius: var(--sf-radius-sm);
+}
+
+/* ---------- 标签：小圆角胶囊 ---------- */
+.el-tag {
+  border-radius: 999px;
+  padding: 0 10px;
+  font-weight: 500;
+}
+
+/* ---------- 表格：淡青表头、悬浮高亮 ---------- */
+.el-table th.el-table__cell {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.el-table__row:hover > td.el-table__cell {
+  background: #f2faf9 !important;
+}
+
+/* ---------- 输入类控件聚焦 ---------- */
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--sf-primary) inset, 0 0 0 3px rgba(13, 148, 136, 0.12) !important;
+}
+
+/* ---------- 对话框 / 抽屉圆角 ---------- */
+.el-dialog {
+  border-radius: var(--sf-radius-lg);
+  overflow: hidden;
+}
+
+.el-drawer {
+  border-radius: var(--sf-radius-lg) 0 0 var(--sf-radius-lg);
+}
+
+/* ---------- 滚动条 ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 148, 136, 0.25);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 148, 136, 0.45);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- 路由切换过渡 ---------- */
+.sf-page-enter-active {
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sf-page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* ---------- 通用入场动效 ---------- */
+@keyframes sf-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sf-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.sf-fade-up {
+  animation: sf-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---------- 通用装饰工具类 ---------- */
+
+/* 区块标题：青碧强调条 + 标题文字 */
+.sf-section-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sf-ink-soft);
+  letter-spacing: 0.5px;
+}
+
+.sf-section-title::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--sf-primary-soft), var(--sf-primary));
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.35);
+  flex-shrink: 0;
+}
+
+/* 渐变文字（用于大数字、品牌字） */
+.sf-gradient-text {
+  background: linear-gradient(135deg, var(--sf-primary-soft) 0%, var(--sf-primary-strong) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 毛玻璃面板 */
+.sf-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+}
+
+/* 卡片顶部高光：让白卡更有「瓷感」 */
+.el-card {
+  position: relative;
+}
+
+.el-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.35), transparent);
+  pointer-events: none;
+}
+
+/* 尊重系统「减少动态效果」偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

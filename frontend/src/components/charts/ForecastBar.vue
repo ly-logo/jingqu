@@ -46,7 +46,13 @@ function updateChart() {
         type: 'bar',
         data: values,
         barMaxWidth: 14,
-        itemStyle: { color: '#409eff', borderRadius: [3, 3, 0, 0] },
+        itemStyle: {
+          borderRadius: [4, 4, 0, 0],
+          color: new (echarts as any).graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: '#2dd4bf' },
+            { offset: 1, color: '#0d9488' },
+          ]),
+        },
         markArea: {
           silent: true,
           itemStyle: { color: 'rgba(230,162,60,0.15)' },

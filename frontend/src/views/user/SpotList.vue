@@ -20,19 +20,21 @@
     </div>
 
     <el-card
-      v-for="s in filtered"
+      v-for="(s, i) in filtered"
       :key="s.spotId"
       shadow="never"
-      class="card spot-card"
+      class="card spot-card sf-fade-up"
+      :style="{ animationDelay: `${Math.min(i * 0.05, 0.4)}s` }"
       @click="$router.push(`/spots/${s.spotId}`)"
     >
       <div class="spot-row">
+        <span class="level-bar" :style="{ background: levelColor(s.level) }"></span>
         <div class="spot-info">
           <div class="spot-name">{{ s.name }}</div>
           <div class="spot-meta">
             <QueueBadge :minutes="s.queueMinutes" />
             <span class="open-status" :class="{ closed: !isOpen(s) }">
-              {{ isOpen(s) ? '开放中' : '已关闭' }}
+              {{ isOpen(s) ? '· 开放中' : '· 已关闭' }}
             </span>
           </div>
         </div>
@@ -52,6 +54,12 @@ import QueueBadge from '@/components/user/QueueBadge.vue'
 import { getUserOverview } from '@/api'
 import type { UserSpotBrief } from '@/api'
 import { usePolling } from '@/composables/usePolling'
+import { getLevelColor } from '@/utils/level'
+import type { CongestionLevel } from '@/api'
+
+function levelColor(level: CongestionLevel): string {
+  return getLevelColor(level)
+}
 
 const spots = ref<UserSpotBrief[]>([])
 const keyword = ref('')
@@ -101,12 +109,17 @@ usePolling(fetchData, 30000)
   width: 110px;
 }
 
-.card {
-  border-radius: 6px;
-}
-
+/* ---------- 景点卡：等级色条 + 悬浮 ---------- */
 .spot-card {
   cursor: pointer;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease;
+}
+
+.spot-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sf-shadow);
 }
 
 .spot-card :deep(.el-card__body) {
@@ -116,14 +129,26 @@ usePolling(fetchData, 30000)
 .spot-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
+}
+
+.level-bar {
+  width: 5px;
+  height: 38px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.spot-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .spot-name {
   font-size: 16px;
   font-weight: 600;
-  color: #303133;
+  color: var(--sf-ink-soft);
 }
 
 .spot-meta {
@@ -135,10 +160,10 @@ usePolling(fetchData, 30000)
 
 .open-status {
   font-size: 12px;
-  color: #67c23a;
+  color: #4caf7d;
 }
 
 .open-status.closed {
-  color: #909399;
+  color: #9aa8a4;
 }
 </style>

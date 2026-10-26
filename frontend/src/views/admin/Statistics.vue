@@ -106,11 +106,11 @@ function renderCharts() {
         smooth: true,
         showSymbol: false,
         data: d.flow.map((f) => f.visitors),
-        lineStyle: { width: 2, color: '#409eff' },
+        lineStyle: { width: 2, color: '#0d9488' },
         areaStyle: {
           color: new (echarts as any).graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: 'rgba(64,158,255,0.35)' },
-            { offset: 1, color: 'rgba(64,158,255,0.02)' },
+            { offset: 0, color: 'rgba(20,184,166,0.32)' },
+            { offset: 1, color: 'rgba(20,184,166,0.02)' },
           ]),
         },
       },

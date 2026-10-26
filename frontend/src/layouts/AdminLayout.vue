@@ -2,16 +2,16 @@
   <div class="admin-layout">
     <aside class="sidebar" :class="{ collapsed }">
       <div class="sidebar-logo" @click="$router.push('/admin/overview')">
-        <span class="logo-icon">🏞</span>
+        <span class="logo-badge">🏞</span>
         <span v-if="!collapsed" class="logo-text">ScenicFlow 管理平台</span>
       </div>
 
       <el-menu
         :default-active="activeMenu"
         :collapse="collapsed"
-        background-color="#001529"
-        text-color="rgba(255,255,255,0.72)"
-        active-text-color="#409eff"
+        background-color="transparent"
+        text-color="rgba(255,255,255,0.68)"
+        active-text-color="#ffffff"
         router
         class="sidebar-menu"
       >
@@ -156,15 +156,20 @@ function handleLogout() {
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background: #f5f7fa;
 }
 
+/* ---------- 侧边栏：山黛深青渐变 ---------- */
 .sidebar {
   width: 208px;
-  background: #001529;
   flex-shrink: 0;
   transition: width 0.25s;
   overflow: hidden;
+  background:
+    radial-gradient(320px 240px at 0% 0%, rgba(45, 212, 191, 0.22) 0%, transparent 65%),
+    linear-gradient(180deg, #0d3d39 0%, #092e2b 55%, #062421 100%);
+  box-shadow: 4px 0 18px rgba(6, 36, 33, 0.18);
+  position: relative;
+  z-index: 11;
 }
 
 .sidebar.collapsed {
@@ -175,26 +180,73 @@ function handleLogout() {
   height: 56px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 16px;
+  gap: 10px;
+  padding: 0 14px;
   color: #fff;
   font-weight: 600;
   font-size: 15px;
+  letter-spacing: 0.5px;
   cursor: pointer;
   white-space: nowrap;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 }
 
-.logo-icon {
-  font-size: 20px;
+.logo-badge {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #2dd4bf, #0d9488);
+  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.45);
+}
+
+.logo-badge svg {
+  width: 18px;
+  height: 18px;
 }
 
 .sidebar-menu {
   border-right: none;
+  padding: 8px;
 }
 
 .sidebar-menu:not(.el-menu--collapse) {
-  width: 208px;
+  width: 100%;
+}
+
+/* 菜单项：圆角胶囊 + 悬浮态 */
+.sidebar-menu :deep(.el-menu-item),
+.sidebar-menu :deep(.el-sub-menu__title) {
+  border-radius: 9px;
+  margin: 2px 0;
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.sidebar-menu :deep(.el-menu-item:hover),
+.sidebar-menu :deep(.el-sub-menu__title:hover) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* 选中项：青碧渐变胶囊 + 柔光 */
+.sidebar-menu :deep(.el-menu-item.is-active) {
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  color: #fff;
+  font-weight: 600;
+  box-shadow:
+    0 4px 14px rgba(13, 148, 136, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* 子菜单弹层底色与侧栏协调 */
+.sidebar-menu :deep(.el-menu) {
+  background: transparent;
 }
 
 .admin-main {
@@ -204,14 +256,18 @@ function handleLogout() {
   flex-direction: column;
 }
 
+/* ---------- 顶栏：毛玻璃 ---------- */
 .admin-header {
   height: 56px;
-  background: #fff;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid rgba(13, 148, 136, 0.1);
+  box-shadow: 0 2px 12px rgba(11, 60, 56, 0.06);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -219,12 +275,30 @@ function handleLogout() {
 
 .collapse-btn {
   font-size: 18px;
+  color: var(--sf-ink-soft);
 }
 
+/* 页面标题：强调条 + 深青 */
 .page-title {
+  position: relative;
+  padding-left: 12px;
   font-size: 15px;
   font-weight: 600;
-  color: #303133;
+  color: var(--sf-ink);
+  letter-spacing: 0.5px;
+}
+
+.page-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 15px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--sf-primary-soft), var(--sf-primary));
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.35);
 }
 
 .header-right {
@@ -236,12 +310,13 @@ function handleLogout() {
 
 .username {
   font-size: 13px;
-  color: #606266;
+  color: var(--sf-text-secondary);
 }
 
 .admin-content {
   flex: 1;
-  padding: 16px;
+  padding: 18px;
+  animation: sf-fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @media (max-width: 768px) {
@@ -250,7 +325,7 @@ function handleLogout() {
   }
 
   .sidebar-menu:not(.el-menu--collapse) {
-    width: 64px;
+    width: 100%;
   }
 
   .username {
